@@ -1,0 +1,59 @@
+!pip install opencv.python
+from google.colab.patches import cv2_imshow
+import cv2
+
+img = cv2.imread('/istockphoto-640299760-170667a.jpg')
+img
+cv2_imshow(img)
+cv2.waitKey()
+
+#if we want to check wether an image is colored or grayscale image we will use shape fn.It also returns a tuple 
+#of no. of rows,columns and channels if image is colored but if it is grey the it returns only no of rows and col not channels.
+img.shape
+
+#if we want a grey scale image we add an attribute 0 in imread function and at the end ued shape fn in which no channel 
+#is given that hows that its a grey Scale image. 
+img = cv2.imread('/istockphoto-640299760-170667a.jpg',0)
+cv2_imshow(img)
+cv2.waitKey()
+img.shape
+
+#Now I am going to code for face detection in which I will be using detectMultiScale function which basically 
+#ued for detecting faces.It takes 3  arguments-input image, scaleFactor and minNeighbours.scaleFactor specifies how
+#much image ize reduced with each scale.minNeighbours specifies how many neighbours each candidate rectangle should have 
+#to retain it
+
+#Haar Cascade: It is also one of the major aspect to create a face recognition system.It is a ML object detection
+#algo .OpenCV offers pre-trained Haar cascade algos,organised into categories(Faces,eye ans so on)
+
+#Load cascade
+face_cascade = cv2.CascadeClassifier('/haarcascade_frontalface_alt.xml')
+#Read the input image
+img = cv2.imread('/istockphoto-640299760-170667a.jpg')
+#Convert into greyScale
+gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+#Detect faces
+faces = face_cascade.detectMultiScale(gray,1.1,4)
+#Draw rectangle around faces
+for (x,y,w,h) in faces:
+    cv2.rectangle(img, (x,y), (x+w,y+h), (255,0,0), 2)
+#Display the output
+cv2_imshow(img)
+cv2.waitKey()
+
+# FOR MULTIPLE FACE RECOGNITION
+
+#Load cascade
+face_cascade = cv2.CascadeClassifier('/haarcascade_frontalface_alt.xml')
+#Read the input image
+img_1 = cv2.imread('/depositphotos_85990244-stock-photo-multiple-portraits-of-young-boy.jpg')
+#Convert into greyScale
+gray = cv2.cvtColor(img_1,cv2.COLOR_BGR2GRAY)
+#Detect faces
+faces = face_cascade.detectMultiScale(gray,1.1,4)
+#Draw rectangle around faces
+for (x,y,w,h) in faces:
+    cv2.rectangle(img_1, (x,y), (x+w,y+h), (255,0,0), 2)
+#Display the output
+cv2_imshow(img_1)
+cv2.waitKey()
